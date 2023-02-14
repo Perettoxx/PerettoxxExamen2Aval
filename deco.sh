@@ -5,15 +5,14 @@ while true; do
     clear
     ## Nos quedamos con las líneas que empiezen por el nombre del parámetro que hemos dado
     if grep -q "^$1 " consumos.txt; then
-        ## Realizamos un contador de consumos con awk
-        consumototal=$(awk -v ciudad=$1 '$1 == ciudad {consumo += $4} END {print consumo}' consumos.txt)
-        ## Contamos los meses en los que dividir el consumo
-        meses=$(grep -c "^$1 " consumos.txt)
-        ## Calculamos la media
-        media=$(echo "$consumototal / $meses" | bc)
-        ## Muestra el resultado
-        echo "$media es la media de consumo en $1."
-        ## Salimos del bucle
+        ## Asignamos a una variable el resultado de cmedia.sh
+        consumomedio=$(./cmedia.sh "$1")
+        ## Se aplica un if para saber si es ECO o no
+        if (( $(echo "$consumomedio < 400" |bc -l) )); then
+            echo "$1 es ECO"
+        else
+            echo "$1 no es ECO"
+        fi
         break
     else
         ## Enviamos un mensaje en caso de que no se haya introducido ninguna ciudad como parámetro o si no se ha introducido alguna válida
