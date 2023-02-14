@@ -1,8 +1,6 @@
 #!/bin/bash
 
 while true; do
-    ## Borramos el terminal
-    clear
     ## Nos quedamos con las líneas que empiezen por el nombre del parámetro que hemos dado
     if grep -q "^$1 " consumos.txt; then
         ## Realizamos un contador de consumos con awk
